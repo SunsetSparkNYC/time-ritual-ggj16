@@ -85,6 +85,8 @@ var playState = {
         // Get based on points
         scenario = SCENARIOS[period][0];
         
+        game.stage.backgroundColor = COLORS[period];
+        
         // Show picture, story, choices
         this.drawScenario(scenario);
     },
@@ -129,6 +131,8 @@ var playState = {
     dream: function () {
         this.clear();
         
+        game.stage.backgroundColor = '#000000';
+        
         this.screen.storyText = game.add.text(game.world.centerX, game.world.centerY, 'Dreaming...', game.global.fontStyle);
         this.currentTime = TIMES[(TIMES.indexOf(this.currentTime) + 1) % TIMES.length];
         game.input.onDown.addOnce(function () { this.nextScenario(this.currentTime) }, this);
@@ -154,6 +158,13 @@ function shuffle(array) {
 
 //TIMES = ['9:00AM', '12:00PM', '3:00PM', '5:00PM', '8:00PM', 'Midnight'];
 TIMES = ['9:00AM'];
+
+COLORS = {
+    '9:00AM': '#837EB1',
+    '12:00PM': '#AA4D39',
+    '3:00PM': '#FFECAA',
+    'Midnight': '#4D9A6A',
+};
 
 SCENARIOS = {
     "9:00AM": [

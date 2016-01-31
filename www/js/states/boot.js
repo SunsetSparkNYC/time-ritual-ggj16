@@ -54,7 +54,7 @@ var bootState = {
 
     create: function() {
         // Set a background color
-        game.stage.backgroundColor = '#878787';
+        game.stage.backgroundColor = '#000000';
         game.stage.smoothed = false;
         game.state.start('menu');
     },
