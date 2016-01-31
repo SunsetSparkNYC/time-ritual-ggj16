@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Time Ritual</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1, IE=9">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="HandheldFriendly" content="true" />
+        <meta name="robots" content="noindex,nofollow" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="apple-mobile-web-app-title" content="Canopy Quest">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+
+        <style type="text/css">
+            @font-face {
+                font-family: 'Pixel Emulator';
+                font-style: normal;
+                font-weight: 400;
+                src: local('Pixel Emulator'), local('Pixel Emulator'), url('fonts/Pixel Emulator.otf') format('opentype');
+            }
+            .hiddenText { font-family: "Pixel Emulator"; visibility: hidden; height: 0; }
+            * { margin: 0; padding: 0; }
+            body {
+                /* the extra 1px allows the iOS inner/outer check to work */
+                margin: 0px 0px 1px 0px;
+                background: #000;
+                overflow: hidden;
+            }
+        </style>
+
+        <!-- Load and initialize Cordova -->
+        <script src="cordova.js"></script>
+        <script src="js/cordova-init.js"></script>
+
+        <!-- Load Phaser -->
+        <script type="text/javascript" src="js/vendor/phaser/phaser.min.js"></script>
+
+        <!-- Load game source -->
+        <script type="text/javascript" src="js/states/boot.js"></script>
+        <script type="text/javascript" src="js/states/menu.js"></script>
+        <script type="text/javascript" src="js/states/play.js"></script>
+
+        <!-- Load game entrance -->
+        <script type="text/javascript" src="js/ritual.js"></script>
+    </head>
+
+    <body>
+        <p class="hiddenText">.</p>
+        <div id="gameDiv"> </div>
+    </body>
+
+</html>
