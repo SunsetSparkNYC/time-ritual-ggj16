@@ -6,7 +6,7 @@ var menuState = {
 
         var touchBtn = game.add.text(game.world.centerX, game.world.height - 200, "Click to Start", game.global.fontStyle);
         touchBtn.anchor.setTo(0.5, 0.5);
-        game.input.onDown.addOnce(this.next, this);
+        game.input.onUp.addOnce(this.next, this);
         game.add.tween(touchBtn.scale)
             .to({
                 x: 1.05,
