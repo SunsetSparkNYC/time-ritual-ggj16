@@ -1,6 +1,10 @@
 var menuState = {
 
     create: function() {
+        music = game.add.audio('menu-music');
+        music.play();
+        music.loopFull(0.6);
+        
         game.add.image(game.world.centerX, game.world.centerY, 'title')
             .anchor.setTo(0.5, 0.5);
 

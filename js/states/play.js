@@ -8,6 +8,11 @@ var playState = {
         };
         game.global.chose = 0;
         this.screen = {};
+        
+        music = game.add.audio('play-music');
+        music.play();
+        music.loopFull(0.6);
+        
         this.currentTime = TIMES[0];
         this.nextScenario(this.currentTime);
     },
