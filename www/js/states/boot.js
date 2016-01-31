@@ -53,5 +53,5 @@ var bootState = {
         game.stage.backgroundColor = '#878787';
         game.stage.smoothed = false;
         game.state.start('menu');
-    }
+    },
 };

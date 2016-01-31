@@ -16,7 +16,7 @@ game.global = {
     fontStyle: {
         font: '22pt "Pixel Emulator"',
         fill: 'rgb(255, 255, 255)',
-        align: 'center',
+        align: 'left',
         stroke: 'rgba(0,0,0,0.85)',
         strokeThickness: 3,
         wordWrap: true,
