@@ -35,10 +35,30 @@ var playState = {
         this.screen.choice2.destroy();
         this.screen.choice3.destroy();
         
-        this.screen.storyArt = game.add.sprite(game.world.centerX, game.global.imageZoneCenterY, clicked.choice.after);
-        this.screen.storyArt.anchor.setTo(0.5, 0.5);
+        if (game.cache.getImage(clicked.choice.after).width > game.world.width) {
+            var downsample = game.world.width / game.cache.getImage(clicked.choice.after).width;
+            this.screen.storyArt = game.add.sprite(game.world.centerX, 0, clicked.choice.after);
+            this.screen.storyArt.anchor.setTo(0.5, 0);
+            this.screen.storyArt.scale.setTo(downsample, downsample);
+        } else  if (game.cache.getImage(clicked.choice.after).height > 400) {
+            this.screen.storyArt = game.add.sprite(game.world.centerX, 0, clicked.choice.after);
+            this.screen.storyArt.anchor.setTo(0.5, 0);
+        } else {
+            this.screen.storyArt = game.add.sprite(game.world.centerX, game.global.imageZoneCenterY, clicked.choice.after);
+            this.screen.storyArt.anchor.setTo(0.5, 0.5);
+        }
         
-        this.screen.storyText = game.add.text(game.global.margin, game.global.textZoneTop, clicked.choice.text, game.global.fontStyle);
+        var afterStyle = {
+            font: '28pt "Pixel Emulator"',
+            fill: 'rgb(255, 255, 255)',
+            align: 'center',
+            stroke: 'rgba(0,0,0,0.85)',
+            strokeThickness: 3,
+            wordWrap: true,
+            wordWrapWidth: (desiredHeight * aspect) - 80,
+        }
+        this.screen.storyText = game.add.text(game.world.centerX, game.global.choiceZoneTop, 'You ' + clicked.choice.text, game.global.fontStyle);
+        this.screen.storyText.anchor.setTo(0.5, 0.5);
         
         var nextTimeIdx = TIMES.indexOf(this.currentTime) + 1;
         if (nextTimeIdx >= TIMES.length) {
@@ -67,8 +87,19 @@ var playState = {
     drawScenario: function(scenario) {
         scenario.choices = shuffle(scenario.choices);
         
-        this.screen.storyArt = game.add.sprite(game.world.centerX, game.global.imageZoneCenterY, scenario.storyArt);
-        this.screen.storyArt.anchor.setTo(0.5, 0.5);
+        if (game.cache.getImage(scenario.storyArt).width > game.world.width) {
+            var downsample = game.world.width / game.cache.getImage(scenario.storyArt).width;
+            this.screen.storyArt = game.add.sprite(game.world.centerX, 0, scenario.storyArt);
+            this.screen.storyArt.anchor.setTo(0.5, 0);
+            this.screen.storyArt.scale.setTo(downsample, downsample);
+        } else  if (game.cache.getImage(scenario.storyArt).height > 400) {
+            this.screen.storyArt = game.add.sprite(game.world.centerX, 0, scenario.storyArt);
+            this.screen.storyArt.anchor.setTo(0.5, 0);
+        } else {
+            this.screen.storyArt = game.add.sprite(game.world.centerX, game.global.imageZoneCenterY, scenario.storyArt);
+            this.screen.storyArt.anchor.setTo(0.5, 0.5);
+        }
+        
         this.screen.storyText = game.add.text(game.global.margin, game.global.textZoneTop, scenario.time + ' - ' + scenario.storyText + ' What do you want to do?', game.global.fontStyle);
         
         var choiceHeightDelta = (game.world.height - game.global.choiceZoneTop) / 3;
@@ -141,7 +172,7 @@ SCENARIOS = {
                 {
                     text: "This is a choice 3.",
                     type: 'bad',
-                    after: 'monster',
+                    after: 'cat-fire',
                     points: 5,
                 },
             ]
