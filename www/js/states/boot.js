@@ -12,11 +12,12 @@ var bootState = {
     },
 
     preload: function() {
-        game.load.audio('menu-music', ['sfx/sound-test.m4a',]);
+        game.load.audio('menu-music', ['sfx/menu-soundtrack.m4a',]);
         game.load.audio('play-music', ['sfx/sound-test.m4a',]);
 
         
         game.load.image('antagonist', 'img/antagonist.png');
+        game.load.image('bed', 'img/bed.png');
         game.load.image('book', 'img/book.png');
         game.load.image('book2', 'img/book2.png');
         game.load.image('cat-camping', 'img/cat-camping.png');

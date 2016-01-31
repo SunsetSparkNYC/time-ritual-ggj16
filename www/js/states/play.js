@@ -8,6 +8,7 @@ var playState = {
         };
         game.global.chose = 0;
         this.screen = {};
+        this.screen.dreamCreatures = game.add.group();
         
         music = game.add.audio('play-music');
         music.play();
@@ -25,6 +26,7 @@ var playState = {
             this.screen.choice2.destroy();
             this.screen.choice3.destroy();
         }
+        this.screen.dreamCreatures.removeAll();
     },
     
     choose: function(clicked) {
@@ -83,7 +85,8 @@ var playState = {
         this.clear();
         
         // Get based on points
-        scenario = SCENARIOS[period][0];
+        randomIndex = Math.floor(Math.random() * SCENARIOS[period].length);
+        scenario = SCENARIOS[period][randomIndex];
         
         game.stage.backgroundColor = COLORS[period];
         
@@ -130,8 +133,44 @@ var playState = {
     
     dream: function () {
         this.clear();
-        
         game.stage.backgroundColor = '#000000';
+        
+        for(var i=0; i < (game.global.points['good']/ 10); i++) {
+            var unicorn = game.add.sprite(game.world.width*Math.random(), game.world.height*Math.random(), 'unicorn');
+            var randScale = Math.random();
+            var angle = '+360';
+            if (Math.random() > 0.5) {
+                angle = '-360';
+            }
+            unicorn.anchor.setTo(0.5, 0.5);
+            unicorn.scale.setTo(Math.random()*2);
+            game.add.tween(unicorn)
+                .to({angle: angle}, Math.random()*6000)
+                .loop().start();
+            game.add.tween(unicorn.scale)
+                .to({x: randScale, y: randScale}, Math.random()*1000)
+                .to({x: 1, y: 1}, Math.random()*1000)
+                .yoyo().loop().start();
+            this.screen.dreamCreatures.add(unicorn);
+        }
+        
+        for(var i=0; i < (game.global.points['bad'] / 10); i++) {
+            var monster = game.add.sprite(game.world.width*Math.random(), game.world.height*Math.random(), 'monster-trimmed');
+            var randScale = Math.random();
+            monster.anchor.setTo(0.5, 0.5);
+            monster.scale.setTo(Math.random()*2);
+            var angle = '+360';
+            if (Math.random() > 0.5) {
+                angle = '-360';
+            }
+            game.add.tween(monster)
+                .to({angle: angle}, Math.random()*6000)
+                .loop().start();
+            game.add.tween(monster.scale)
+                .to({x: randScale, y: randScale}, Math.random()*1000)
+                .loop().start();
+            this.screen.dreamCreatures.add(monster);
+        }
         
         this.screen.storyText = game.add.text(game.world.centerX, game.world.centerY, 'Dreaming...', game.global.fontStyle);
         this.currentTime = TIMES[(TIMES.indexOf(this.currentTime) + 1) % TIMES.length];
@@ -157,12 +196,11 @@ function shuffle(array) {
 }
 
 //TIMES = ['9:00AM', '12:00PM', '3:00PM', '5:00PM', '8:00PM', 'Midnight'];
-TIMES = ['9:00AM'];
+TIMES = ['9:00AM', '8:00PM', 'Midnight'];
 
 COLORS = {
     '9:00AM': '#837EB1',
-    '12:00PM': '#AA4D39',
-    '3:00PM': '#FFECAA',
+    '8:00PM': '#FFECAA',
     'Midnight': '#4D9A6A',
 };
 
@@ -170,28 +208,134 @@ SCENARIOS = {
     "9:00AM": [
         {
             time: '9:00AM',
-            storyArt: 'unicorn',
-            storyText: 'This is a story.',
+            storyArt: 'bed',
+            storyText: 'You just woke up.',
             choices: [
                 {
-                    text: "This is a choice 1.",
+                    text: "Take out the trash",
                     type: 'good',
-                    after: 'cat-pet',
+                    after: 'trash-bag',
                     points: 5,
                 },
                 {
-                    text: "This is a choice 2.",
+                    text: "Feed the snake",
                     type: 'neutral',
-                    after: 'garbage',
+                    after: 'snake',
                     points: 5,
                 },
                 {
-                    text: "This is a choice 3.",
+                    text: "Hide trash under bed.",
                     type: 'bad',
-                    after: 'cat-fire',
+                    after: 'trash-under-bed',
+                    points: 5,
+                },
+            ]
+        },
+        {
+            time: '9:00AM',
+            storyArt: 'scary-guy',
+            storyText: 'You just woke up from a nightmare.',
+            choices: [
+                {
+                    text: "Read a book.",
+                    type: 'good',
+                    after: 'book2',
+                    points: 5,
+                },
+                {
+                    text: "Go back to sleep.",
+                    type: 'neutral',
+                    after: 'bed',
+                    points: 5,
+                },
+                {
+                    text: "Scream.",
+                    type: 'bad',
+                    after: 'scream',
                     points: 5,
                 },
             ]
         }
     ],
+    
+    "8:00PM": [
+        {
+            time: '8:00PM',
+            storyArt: 'flower',
+            storyText: 'On your way home you stop to smell the flowers.',
+            choices: [
+                {
+                    text: "Admire the flower.",
+                    type: 'good',
+                    after: 'flower',
+                    points: 5,
+                },
+                {
+                    text: "Walk past the flower",
+                    type: 'neutral',
+                    after: 'flower',
+                    points: 5,
+                },
+                {
+                    text: "Crush the flower",
+                    type: 'bad',
+                    after: 'flower',
+                    points: 5,
+                },
+            ]
+        },
+        {
+            time: '8:00PM',
+            storyArt: 'trash-bag',
+            storyText: 'Your mom tells you to take out the trash.',
+            choices: [
+                {
+                    text: "Take out the trash.",
+                    type: 'good',
+                    after: 'garbage',
+                    points: 5,
+                },
+                {
+                    text: "Hide the trash under the bed.",
+                    type: 'neutral',
+                    after: 'trash-under-bed',
+                    points: 5,
+                },
+                {
+                    text: "Set the trash on fire.",
+                    type: 'bad',
+                    after: 'garbage-burning',
+                    points: 5,
+                },
+            ]
+        }
+    ],
+    
+    "Midnight": [
+        {
+            time: 'Midnight',
+            storyArt: 'bed',
+            storyText: 'Your cat joins you in the bedroom.',
+            choices: [
+                {
+                    text: "Pet the cat",
+                    type: 'good',
+                    after: 'cat-pet',
+                    points: 5,
+                },
+                {
+                    text: "Tell your cat to go away.",
+                    type: 'neutral',
+                    after: 'cat',
+                    points: 5,
+                },
+                {
+                    text: "Set the cat on fire.",
+                    type: 'bad',
+                    after: 'cat-fire',
+                    points: 5,
+                },
+            ]
+        },
+    ]
 }
